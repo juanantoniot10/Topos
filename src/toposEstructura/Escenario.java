@@ -1,9 +1,16 @@
 package toposEstructura;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.ListIterator;
+
+import elementos.Topo;
+
 public class Escenario {
 	private int ancho,alto;
 	private PanelBasico paneles [][];
 	private Posicion objetivo;
+	private ArrayList<Topo> topos;
 	
 	public Escenario(int ancho, int alto) {
 		super();
@@ -16,8 +23,80 @@ public class Escenario {
 			}
 		}
 		this.objetivo = new Posicion();
+		topos = new ArrayList<Topo>();
 	}
 
+	public boolean isTopo(int i , int j) {
+		if(checkTopo(i, j)!=null)return true;
+		return false;
+	}
+	
+	public ArrayList<Topo> getTopos() {
+		return topos;
+	}
+
+	public Topo checkTopo (int i,int j) {
+		for (ListIterator<Topo> iterator = topos.listIterator(); iterator.hasNext();) {
+			Topo topo = iterator.next();
+			if(topo.getPosicion().getX()==i&&topo.getPosicion().getY()==j) {
+				return topo;
+			}
+		}
+		return null;
+	}
+	
+	public boolean addTopo(Topo topo3) {
+		boolean aniadible = false;
+		for (ListIterator<Topo> iterator2 = this.topos.listIterator(); iterator2.hasNext();) {
+			Topo topoEscenario = iterator2.next();
+			if (topo3.compareTo(topoEscenario) == 0) {
+				aniadible=false;
+			}
+		}
+		if(aniadible==true) {
+			topo3.setEscenario(this);
+			this.topos.add(topo3);
+		}
+		return aniadible;
+	}
+	
+	
+	public ArrayList<Topo> addTopo (ArrayList<Topo> toposAd) {
+		for (ListIterator<Topo> iterator = toposAd.listIterator(); iterator.hasNext();) {
+			Topo topoAdd = iterator.next();
+			boolean aniadible = true;
+			if(this.topos.size()>0) {
+				for (ListIterator<Topo> iterator2 = this.topos.listIterator(); iterator2.hasNext();) {
+					Topo topoEscenario = iterator2.next();
+					if (topoAdd.compareTo(topoEscenario) == 0) {
+						aniadible=false;
+					}
+				}
+				if(aniadible==true) {
+					topoAdd.setEscenario(this);
+					this.topos.add(topoAdd);
+				}
+			}
+			else {
+				topoAdd.setEscenario(this);
+				this.topos.add(topoAdd);
+			}
+		}
+		for (ListIterator<Topo> iterator = this.topos.listIterator(); iterator.hasNext();) {
+			Topo topoEscenario = iterator.next();
+			boolean borrable = false;
+				for (ListIterator<Topo> iterator2 = toposAd.listIterator(); iterator2.hasNext();) {
+					Topo topoAdd = iterator2.next();
+					if (topoEscenario.compareTo(topoAdd) == 0) {
+						borrable=true;
+					}
+				}
+				if(borrable) {
+					toposAd.remove(topoEscenario);
+				}
+		}
+		return toposAd;
+	}
 	
 	public void desplazarObjetivo(Direccion direccion){
 		if(this.checkLimit(objetivo.getVecina(direccion).getX(),objetivo.getVecina(direccion).getY())) {
@@ -56,5 +135,6 @@ public class Escenario {
 	public PanelBasico[][] getPaneles() {
 		return paneles;
 	}
+
 	
 }

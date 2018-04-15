@@ -1,5 +1,8 @@
 package toposPruebas;
 
+import java.util.ArrayList;
+
+import elementos.Topo;
 import toposEstructura.Direccion;
 import toposEstructura.Escenario;
 import toposEstructura.PanelBasico;
@@ -37,6 +40,33 @@ public class PruebaEscenario {
 		System.out.println("La posicion del objetivo despues de desplazarlo a la derecha: X = " + escenario.getObjetivo().getX() + " Y = " + escenario.getObjetivo().getY());
 		
 		
+		Topo topo1 = new Topo(1,2);
+		Topo topo2 = new Topo(2,3);
+		ArrayList<Topo> toposPrueba = new ArrayList<Topo>();
+		toposPrueba.add(topo1);
+		toposPrueba.add(topo2);
+		
+		ArrayList<Topo> toposDevueltos = escenario.addTopo(toposPrueba);
+		
+		System.out.println("tamanio de topos escenario = " + escenario.getTopos().size());
+		System.out.println("numero de topos de retorno en el array topos prueba = "+toposDevueltos.size());
+	
+		System.out.println("comprobando que en 1,2 hay topo");
+		System.out.println(escenario.checkTopo(1, 2));
+		System.out.println("probando que es topo1");
+		System.out.println(topo1.equals(escenario.checkTopo(1, 2)));
+		
+		Topo topo3 = new Topo(2	, 3);
+		System.out.println("intentando anadir topo en posicion con topo");
+		System.out.println(escenario.addTopo(topo3));
+		System.out.println("tamanio de topos escenario = " + escenario.getTopos().size());
+		
+		System.out.println("mostrando escenario de topo1");
+		System.out.println("topo1 escenario = "+topo1.getEscenario());
+		System.out.println("comprobando si su escenario es el creado aqui ");
+		System.out.println(escenario.equals(topo1.getEscenario()));
+		
+		System.out.println(System.currentTimeMillis());
 	}
 
 }

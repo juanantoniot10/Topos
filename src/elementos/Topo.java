@@ -1,10 +1,12 @@
 package elementos;
 
 import toposEstructura.Direccion;
+import toposEstructura.Escenario;
 import toposEstructura.Posicion;
 
-public class Topo {
+public class Topo implements Comparable<Topo>{
 	private Posicion posicion;
+	private Escenario escenario;
 	
 	public Topo(int posicionX, int posicionY) {
 		super();
@@ -24,6 +26,19 @@ public class Topo {
 
 	public Posicion getPosicion() {
 		return posicion;
+	}
+
+	@Override
+	public int compareTo(Topo o) {
+		return String.valueOf(posicion.getX()+posicion.getY()).compareTo(String.valueOf(o.posicion.getX() + o.posicion.getY()));
+	}
+
+	public Escenario getEscenario() {
+		return escenario;
+	}
+
+	public void setEscenario(Escenario escenario) {
+		this.escenario = escenario;
 	}
 	
 }
