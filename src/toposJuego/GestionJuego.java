@@ -23,12 +23,12 @@ public class GestionJuego {
 	}
 	
 	public boolean isTiempoFinalizado() {
-		return this.segundosRestantes<=0;
+		return this.getSegundosRestantes()<=0;
 	}
 	
 	public void arrancarPartida() {
 		this.inicioPartida = System.currentTimeMillis();
-		this.segundosRestantes =  (segundos*1000)-getTiempoTranscurrido();
+		this.segundosRestantes=((segundos*1000)-(System.currentTimeMillis()-this.inicioPartida))/1000;
 	}
 	
 	public long getTiempoTranscurrido() {
@@ -83,7 +83,11 @@ public class GestionJuego {
 	}
 
 	public long getSegundosRestantes() {
-		return this.segundos-(getTiempoTranscurrido()/1000);
+		return ((segundos*1000)-(System.currentTimeMillis()-this.inicioPartida))/1000;
+	}
+
+	public void setSegundosRestantes(long segundosRestantes) {
+		this.segundosRestantes = segundosRestantes;
 	} 
 	
 	

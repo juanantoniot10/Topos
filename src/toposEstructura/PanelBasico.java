@@ -1,8 +1,10 @@
 package toposEstructura;
 
 public class PanelBasico{
+	private static final int TIEMPOACTUALIZAR = 5000;
 	private boolean visible;
 	private Posicion posicion;
+	private long tiempo;
 	
 	
 	public PanelBasico(int posicionX, int posicionY, boolean visible) {
@@ -23,6 +25,9 @@ public class PanelBasico{
 		this.visible = visible;
 	}
 	
+	public String getImagen() {
+		return new String("imagenes/panel-basico.gif");
+	}
 	
 	public PanelBasico(Posicion posicion) {
 		super();
@@ -34,10 +39,19 @@ public class PanelBasico{
 	 * golpea una casilla y oculta su contenido
 	 */
 	public void golpear() {
-		if(this.visible)this.visible=false;
+		if(this.visible) {
+			this.visible=false;
+			this.tiempo = System.currentTimeMillis();
+		}
 	}
 	
 	
+	
+	public void actualizar() {
+		if(!this.visible && System.currentTimeMillis()-TIEMPOACTUALIZAR>=this.tiempo) {
+			this.visible=true;
+		}
+	}
 	
 	public Posicion getPosicion() {
 		return posicion;
@@ -50,5 +64,10 @@ public class PanelBasico{
 	public boolean isVisible() {
 		return visible;
 	}
+
+	public long getTiempo() {
+		return tiempo;
+	}
+
 	
 }
